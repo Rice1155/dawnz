@@ -333,7 +333,9 @@ export default function SparksPage() {
   }
 
   const currentItems = activeTab === 'sparks' ? sparks : reflections
-  const groupedItems = viewType === 'book' ? groupByBook(currentItems) : null
+  const groupedItems = viewType === 'book'
+    ? groupByBook(currentItems as (Spark | Reflection)[])
+    : null
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
