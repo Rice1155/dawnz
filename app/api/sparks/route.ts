@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     // If fetching by share token (public access)
     if (shareToken) {
       const { data: spark, error } = await supabase
-        .from('sparks')
+        .from('sparks' as any)
         .select(`
           *,
           book:books(id, title, authors, cover_small, cover_medium),
@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
     }
 
     let query = supabase
-      .from('sparks')
+      .from('sparks' as any)
       .select(`
         *,
         book:books(id, title, authors, cover_small, cover_medium)
@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
 
     // Create the spark
     const { data: spark, error } = await supabase
-      .from('sparks')
+      .from('sparks' as any)
       .insert({
         user_id: user.id,
         book_id: bookId || null,
@@ -164,7 +164,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     const { data: spark, error } = await supabase
-      .from('sparks')
+      .from('sparks' as any)
       .update(updates)
       .eq('id', sparkId)
       .eq('user_id', user.id)
@@ -204,7 +204,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     const { error } = await supabase
-      .from('sparks')
+      .from('sparks' as any)
       .delete()
       .eq('id', sparkId)
       .eq('user_id', user.id)

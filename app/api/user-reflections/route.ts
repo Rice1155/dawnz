@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     // If fetching by share token (public access)
     if (shareToken) {
       const { data: reflection, error } = await supabase
-        .from('user_reflections')
+        .from('user_reflections' as any)
         .select(`
           *,
           book:books(id, title, authors, cover_small, cover_medium),
@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
     }
 
     let query = supabase
-      .from('user_reflections')
+      .from('user_reflections' as any)
       .select(`
         *,
         book:books(id, title, authors, cover_small, cover_medium)
@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
 
     // Create the reflection
     const { data: reflection, error } = await supabase
-      .from('user_reflections')
+      .from('user_reflections' as any)
       .insert({
         user_id: user.id,
         book_id: bookId || null,
@@ -158,7 +158,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     const { data: reflection, error } = await supabase
-      .from('user_reflections')
+      .from('user_reflections' as any)
       .update(updates)
       .eq('id', reflectionId)
       .eq('user_id', user.id)
@@ -198,7 +198,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     const { error } = await supabase
-      .from('user_reflections')
+      .from('user_reflections' as any)
       .delete()
       .eq('id', reflectionId)
       .eq('user_id', user.id)

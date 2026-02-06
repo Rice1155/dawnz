@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
 
     // Try to fetch from database
     let query = supabase
-      .from('spark_prompts')
+      .from('spark_prompts' as any)
       .select('*')
       .eq('active', true)
 
