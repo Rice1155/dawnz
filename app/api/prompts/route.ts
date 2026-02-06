@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 
+type SparkPrompt = {
+  id: string
+  prompt: string
+  type: string
+  genres: string[] | null
+  active: boolean
+}
+
 // Default prompts in case database isn't set up yet
 const defaultPrompts = [
   'What surprised you in your reading today?',
@@ -41,7 +49,7 @@ export async function GET(request: NextRequest) {
       query = query.eq('type', type)
     }
 
-    const { data: prompts, error } = await query
+    const { data, error } = await query
 
     if (error) {
       console.error('Error fetching prompts:', error)
@@ -52,7 +60,7 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    let filteredPrompts = prompts || []
+    let filteredPrompts: SparkPrompt[] = (data as SparkPrompt[]) || []
 
     // Filter genre-specific prompts if genres provided
     if (genres.length > 0) {
