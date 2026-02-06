@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    let filteredPrompts: SparkPrompt[] = (data as SparkPrompt[]) || []
+    let filteredPrompts: SparkPrompt[] = (data as unknown as SparkPrompt[]) || []
 
     // Filter genre-specific prompts if genres provided
     if (genres.length > 0) {
